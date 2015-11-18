@@ -72,6 +72,39 @@ class logger:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
+class conversion:
+
+	def __init__(self, format_):
+		self.format = format_
+
+	
+
+def convertData(p, conn):
+	if "readme" in p:
+		continue
+	try:
+		# load data
+		df = pandas.read_csv(config.path_to_data + "/" + p + ".csv")
+		# Initiate scraper and scrape
+		scr = scraper(config.path_to_variables + "/" + p + ".html").scrape()
+		# Create SQL tables
+		insert_SQL(conn).insert_headers(scr)
+		# Insert data
+		df.to_sql(name = p, con = conn, if_exists = 'append', index=False)
+	except (pandas.parser.CParserError, sqlite3.ProgrammingError, sqlite3.IntegrityError) as error:
+		print "ERROR: {}".format(type(error))
+		log = logger(config.logger_location)
+		log.logMessage("ERROR", "Could not process file {} file due to following error {}".format(p, type(error)))
+		# If CPparserError, try ...
+		if str(type(error)) == "<class 'pandas.parser.CParserError'>":
+			try:
+				# Read line without errors
+				df = pandas.read_csv(config.path_to_data + "/" + p + ".csv", error_bad_lines=False)
+				df.to_sql(name = p, con = conn, if_exists = 'append', index=False)
+			except (sqlite3.ProgrammingError, sqlite3.IntegrityError) as error:
+				print "ERROR: {}".format(type(error))
+				log.logMessage("ERROR", "Could not process file {} file due to following error {}".format(p, type(error)))
+
 # Call
 
 if __name__ == "__main__":
@@ -80,20 +113,5 @@ if __name__ == "__main__":
 	# Connect to db
 	conn = sqlite3.connect(config.SQL_database_name)
 	# Get sql statements for each file
-	for p in files:
-		print p
-		if "readme" in p:
-			continue
-		# Initiate scraper and scrape
-		scr = scraper(config.path_to_variables + "/" + p + ".html").scrape()
-		# Create SQL tables
-		insert_SQL(conn).insert_headers(scr)
-		# Insert data
-		try:
-			df = pandas.read_csv(config.path_to_data + "/" + p + ".csv")
-			df.to_sql(name = p, con = conn, if_exists = 'append', index=False)
-		except (pandas.parser.CParserError, sqlite3.ProgrammingError, sqlite3.IntegrityError) as error:
-			print "ERROR: {}".format(type(error))
-			log = logger(config.logger_location)
-			log.logMessage("ERROR", "Could not process file {} file due to following error {}".format(p, type(error)))
-			
+	for file_ in files:
+
