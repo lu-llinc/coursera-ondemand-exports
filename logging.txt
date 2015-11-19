@@ -1,85 +1,85 @@
-2015-11-19 16:30:54	INFO	started log
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for assessment_text_exact_match_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset peer_review_part_choices into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for on_demand_session_memberships into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for course_item_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset assessment_actions into federalism_ondemand.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset course_memberships into federalism_ondemand.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset assessment_question_types into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for peer_submission_part_free_responses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for assessment_regex_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset peer_assignment_review_schema_part_options into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for assessment_single_numeric_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for on_demand_sessions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset course_modules into federalism_ondemand.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset demographics_questions into federalism_ondemand.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset assessment_response_options into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for assessment_math_expression_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset assessment_response_patterns into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for programming_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for programming_submission_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset course_item_peer_assignments into federalism_ondemand.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset course_grades into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for peer_reviews into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	POSTGRES-QUERYERROR	Could not send header for programming_submission_part_grid_grading_statuses to database federalism_ondemand. Postgres returned error 'psycopg2.ProgrammingError'
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for programming_submission_part_grid_grading_statuses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for assessment_math_expression_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for courses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:55	SUCCESS	Successfully inserted data from dataset discussion_question_followings into federalism_ondemand.
-2015-11-19 16:30:55	CSV-OPENERROR	could not insert data for course_item_programming_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:56	CSV-OPENERROR	could not insert data for assessment_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_mcq_questions into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_types into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for assessment_pattern_flag_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset discussion_answer_votes into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_responses into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset peer_submission_part_urls into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for assessment_text_exact_match_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset peer_submission_part_scores into federalism_ondemand.
-2015-11-19 16:30:57	POSTGRES-QUERYERROR	Could not send header for programming_assignment_submission_schema_part_possible_responses to database federalism_ondemand. Postgres returned error 'psycopg2.ProgrammingError'
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for programming_assignment_submission_schema_part_possible_responses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for discussion_question_flags into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_regex_pattern_flags into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_assessments_questions into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset demographics_question_types into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset course_progress_state_types into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset course_lessons into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for programming_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset peer_review_part_free_responses into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset course_formative_quiz_grades into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for peer_comments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset discussion_question_votes into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset course_item_grades into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for discussion_answers into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for demographics_answers into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_mcq_reflect_questions into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for assessment_regex_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset course_item_assessments into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for discussion_answer_flags into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for assessment_scopes into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for peer_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_scope_types into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset demographics_choices into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for peer_assignment_review_schema_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessment_checkbox_reflect_questions into federalism_ondemand.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset assessments into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for assessment_pattern_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for programming_submission_part_text_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:57	SUCCESS	Successfully inserted data from dataset users into federalism_ondemand.
-2015-11-19 16:30:57	CSV-OPENERROR	could not insert data for peer_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:58	SUCCESS	Successfully inserted data from dataset assessment_checkbox_questions into federalism_ondemand.
-2015-11-19 16:30:58	SUCCESS	Successfully inserted data from dataset course_items into federalism_ondemand.
-2015-11-19 16:30:58	CSV-OPENERROR	could not insert data for programming_submission_part_grid_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:58	CSV-OPENERROR	could not insert data for assessment_reflect_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:58	CSV-OPENERROR	could not insert data for programming_assignment_submission_schema_part_grid_schemas into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:58	SUCCESS	Successfully inserted data from dataset discussion_forums into federalism_ondemand.
-2015-11-19 16:30:58	SUCCESS	Successfully inserted data from dataset leiden_course_user_ids into federalism_ondemand.
-2015-11-19 16:30:58	CSV-OPENERROR	could not insert data for peer_skips into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:30:59	CSV-OPENERROR	could not insert data for assessment_options into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:31:00	SUCCESS	Successfully inserted data from dataset course_item_passing_states into federalism_ondemand.
-2015-11-19 16:31:00	CSV-OPENERROR	could not insert data for programming_submission_part_evaluations into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:31:00	CSV-OPENERROR	could not insert data for programming_assignment_submission_schema_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:31:00	SUCCESS	Successfully inserted data from dataset course_progress into federalism_ondemand.
-2015-11-19 16:31:00	CSV-OPENERROR	could not insert data for assessment_single_numeric_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
-2015-11-19 16:31:00	SUCCESS	Successfully inserted data from dataset peer_assignment_submission_schema_parts into federalism_ondemand.
-2015-11-19 16:31:00	CSV-OPENERROR	could not insert data for discussion_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:35	INFO	started log
+2015-11-19 16:35:35	CSV-EOFERROR	could not insert data for assessment_text_exact_match_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:35	SUCCESS	Successfully inserted data from dataset peer_review_part_choices into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for on_demand_session_memberships into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for course_item_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset assessment_actions into federalism_ondemand.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset course_memberships into federalism_ondemand.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset assessment_question_types into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for peer_submission_part_free_responses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for assessment_regex_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset peer_assignment_review_schema_part_options into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for assessment_single_numeric_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for on_demand_sessions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset course_modules into federalism_ondemand.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset demographics_questions into federalism_ondemand.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset assessment_response_options into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for assessment_math_expression_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset assessment_response_patterns into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for programming_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for programming_submission_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset course_item_peer_assignments into federalism_ondemand.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset course_grades into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for peer_reviews into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	POSTGRES-QUERYERROR	Could not send header for programming_submission_part_grid_grading_statuses to database federalism_ondemand. Postgres returned error 'psycopg2.ProgrammingError'
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for programming_submission_part_grid_grading_statuses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for assessment_math_expression_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for courses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:36	SUCCESS	Successfully inserted data from dataset discussion_question_followings into federalism_ondemand.
+2015-11-19 16:35:36	CSV-EOFERROR	could not insert data for course_item_programming_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	CSV-EOFERROR	could not insert data for assessment_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset assessment_mcq_questions into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset assessment_types into federalism_ondemand.
+2015-11-19 16:35:37	CSV-EOFERROR	could not insert data for assessment_pattern_flag_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset discussion_answer_votes into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset assessment_responses into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset peer_submission_part_urls into federalism_ondemand.
+2015-11-19 16:35:37	CSV-EOFERROR	could not insert data for assessment_text_exact_match_patterns into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset peer_submission_part_scores into federalism_ondemand.
+2015-11-19 16:35:37	POSTGRES-QUERYERROR	Could not send header for programming_assignment_submission_schema_part_possible_responses to database federalism_ondemand. Postgres returned error 'psycopg2.ProgrammingError'
+2015-11-19 16:35:37	CSV-EOFERROR	could not insert data for programming_assignment_submission_schema_part_possible_responses into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	CSV-EOFERROR	could not insert data for discussion_question_flags into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset assessment_regex_pattern_flags into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset assessment_assessments_questions into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset demographics_question_types into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset course_progress_state_types into federalism_ondemand.
+2015-11-19 16:35:37	SUCCESS	Successfully inserted data from dataset course_lessons into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for programming_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset peer_review_part_free_responses into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset course_formative_quiz_grades into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for peer_comments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset discussion_question_votes into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset course_item_grades into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for discussion_answers into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for demographics_answers into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset assessment_mcq_reflect_questions into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for assessment_regex_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset course_item_assessments into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for discussion_answer_flags into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for assessment_scopes into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for peer_assignments into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset assessment_scope_types into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset demographics_choices into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for peer_assignment_review_schema_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset assessment_checkbox_reflect_questions into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset assessments into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for assessment_pattern_types into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for programming_submission_part_text_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset users into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for peer_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset assessment_checkbox_questions into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset course_items into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for programming_submission_part_grid_submissions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for assessment_reflect_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for programming_assignment_submission_schema_part_grid_schemas into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset discussion_forums into federalism_ondemand.
+2015-11-19 16:35:38	SUCCESS	Successfully inserted data from dataset leiden_course_user_ids into federalism_ondemand.
+2015-11-19 16:35:38	CSV-EOFERROR	could not insert data for peer_skips into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:40	CSV-EOFERROR	could not insert data for assessment_options into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:41	SUCCESS	Successfully inserted data from dataset course_item_passing_states into federalism_ondemand.
+2015-11-19 16:35:41	CSV-EOFERROR	could not insert data for programming_submission_part_evaluations into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:41	CSV-EOFERROR	could not insert data for programming_assignment_submission_schema_parts into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:41	SUCCESS	Successfully inserted data from dataset course_progress into federalism_ondemand.
+2015-11-19 16:35:41	CSV-EOFERROR	could not insert data for assessment_single_numeric_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-19 16:35:41	SUCCESS	Successfully inserted data from dataset peer_assignment_submission_schema_parts into federalism_ondemand.
+2015-11-19 16:35:41	CSV-EOFERROR	could not insert data for discussion_questions into federalism_ondemand. This is most likely due to 'extra data after last expected column' error.

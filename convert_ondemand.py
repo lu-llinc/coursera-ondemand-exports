@@ -135,10 +135,10 @@ class postgresql:
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
 				if str(type(e)) == '<class psycopg2.ProgrammingError>':
 					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
-					log.logMessage("CSV-OPENERROR", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
+					log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
 				else:
 					print "ERROR: could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database)
-					log.logMessage("CSV-OPENERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
+					log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
 			# Delete file
 			os.remove("{}/{}_temp.csv".format(data_folder, file_))
 			#except psycopg2.DataError as e:
