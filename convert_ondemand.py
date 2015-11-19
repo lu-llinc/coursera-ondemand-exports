@@ -7,7 +7,7 @@ Convert the on-demand course exports to a sqlite table
 
 import bs4 as BeautifulSoup
 import convert_ondemand_config as config
-import sqlite3
+import MySQLdb as mdb
 import os
 import pandas
 from time import localtime, strftime
@@ -32,6 +32,8 @@ Run this script using the command 'python convert_ondemand.py'
 
 '''
 
+# SCRAPER
+
 class scraper:
 
 	def __init__(self, fileN):
@@ -46,17 +48,76 @@ class scraper:
 		except AttributeError:
 			return None
 
+# SQL C
+
 class insert_SQL:
 
-	def __init__(self, conn):
-		self.conn = conn
+	def __init__(self):
+		None
+		
+	def create_database(self, SQLdatabase):
+		conn = mdb.connect("localhost", "root", "root")
 
-	def insert_headers(self, SQLstatement):
-		self.statement = SQLstatement
-		c = self.conn.cursor()
-		c.execute(self.statement)
-		self.conn.commit()
+		with conn:
+			c = conn.cursor()
+			c.execute("DROP DATABASE IF EXISTS {};".format(SQLdatabase))
+			c.execute("CREATE DATABASE {};".format(SQLdatabase))
+			conn.commit()
+
+		if conn:
+			conn.close()
+
+	def insert_headers(self, SQLdatabase, SQLstatement):
+		conn = mdb.connect("localhost", "root", "root", SQLdatabase)
+
+		with conn:
+			c = conn.cursor()
+			c = conn.cursor()
+			c.execute(SQLstatement)
+			conn.commit()
+
+		if conn:
+			conn.close()
+
 		return None
+
+	def checkQuery(self, SQLstatement):
+		if "varchar" in SQLstatement:
+			SQLstatement = SQLstatement.replace("varchar", "VARCHAR(1000)")
+		if "VARCHAR(65535)" in SQLstatement:
+			SQLstatement = SQLstatement.replace("VARCHAR(65535)", "TEXT")
+		if "programming_submission_part_grid_grading_status_executor_run_start_ts" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_submission_part_grid_grading_status_executor_run_start_ts", "programming_submission_part_status_executor_run_start_ts")
+		if "programming_submission_part_grid_grading_status_executor_run_status" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_submission_part_grid_grading_status_executor_run_status", "programming_submission_part_status_executor_run_status")
+
+		if "programming_assignment_submission_schema_part_possible_response_order" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_order", "programming_assignment_submission_schema_response_order")
+		if "programming_assignment_submission_schema_part_possible_response_is_correct" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_is_correct", "programming_assignment_submission_schema_response_correct")
+		if "programming_assignment_submission_schema_part_possible_response_feedback" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_feedback", "programming_assignment_submission_schema_response_feedback")
+		if "programming_assignment_submission_schema_part_possible_response_answers" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_answers", "programming_assignment_submission_schema_response_answers")
+
+		if "programming_submission_part_grid_submission_custom_grader_parameters" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_submission_part_grid_submission_custom_grader_parameters", "programming_submission_part_grader_parameters")
+
+		if "programming_assignment_submission_schema_part_grid_schema_expected_file_name" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_expected_file_name", "programming_assignment_submission_schema_file_name")
+		if "programming_assignment_submission_schema_part_grid_schema_executor_id" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_executor_id", "programming_assignment_submission_schema_executor_id")
+		if "programming_assignment_submission_schema_part_grid_schema_timeout" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_timeout", "programming_assignment_submission_timeout")
+		if "programming_assignment_submission_schema_part_grid_custom_grader_parameters" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_custom_grader_parameters", "programming_assignment_submission_schema_grader_parameters")
+
+		if "programming_assignment_submission_schema_default_incorrect_feedback" in SQLstatement:
+			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_default_incorrect_feedback", "programming_assignment_submission_incorrect_feedback")
+
+		return SQLstatement
+
+# Simple logging function
 
 class logger:
 
@@ -72,46 +133,21 @@ class logger:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
-class conversion:
-
-	def __init__(self, format_):
-		self.format = format_
-
-	
-
-def convertData(p, conn):
-	if "readme" in p:
-		continue
-	try:
-		# load data
-		df = pandas.read_csv(config.path_to_data + "/" + p + ".csv")
-		# Initiate scraper and scrape
-		scr = scraper(config.path_to_variables + "/" + p + ".html").scrape()
-		# Create SQL tables
-		insert_SQL(conn).insert_headers(scr)
-		# Insert data
-		df.to_sql(name = p, con = conn, if_exists = 'append', index=False)
-	except (pandas.parser.CParserError, sqlite3.ProgrammingError, sqlite3.IntegrityError) as error:
-		print "ERROR: {}".format(type(error))
-		log = logger(config.logger_location)
-		log.logMessage("ERROR", "Could not process file {} file due to following error {}".format(p, type(error)))
-		# If CPparserError, try ...
-		if str(type(error)) == "<class 'pandas.parser.CParserError'>":
-			try:
-				# Read line without errors
-				df = pandas.read_csv(config.path_to_data + "/" + p + ".csv", error_bad_lines=False)
-				df.to_sql(name = p, con = conn, if_exists = 'append', index=False)
-			except (sqlite3.ProgrammingError, sqlite3.IntegrityError) as error:
-				print "ERROR: {}".format(type(error))
-				log.logMessage("ERROR", "Could not process file {} file due to following error {}".format(p, type(error)))
-
 # Call
 
 if __name__ == "__main__":
 	# Get file names
 	files = [fileN.replace(".html", "") for fileN in os.listdir(config.path_to_variables)]
-	# Connect to db
-	conn = sqlite3.connect(config.SQL_database_name)
+	# Create database
+	insert_SQL().create_database(config.SQL_database_name)
 	# Get sql statements for each file
 	for file_ in files:
+		if(file_ == "readme"):
+			continue
+		# Initiate scraper and scrape
+		scr = scraper(config.path_to_variables + "/" + file_ + ".html").scrape()
+		scr = insert_SQL().checkQuery(scr)
+		print scr
+		# Create SQL tables
+		insert_SQL().insert_headers(config.SQL_database_name, scr)
 
