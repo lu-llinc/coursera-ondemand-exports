@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 '''
-Convert the on-demand course exports to a sqlite table
+Convert the on-demand course exports to a postgresql table
 '''
 
 import bs4 as BeautifulSoup
