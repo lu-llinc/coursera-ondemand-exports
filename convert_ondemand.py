@@ -7,26 +7,20 @@ Convert the on-demand course exports to a sqlite table
 
 import bs4 as BeautifulSoup
 import convert_ondemand_config as config
-import MySQLdb as mdb
+import psycopg2
 import os
 import pandas
 from time import localtime, strftime
 
 '''
 
-This script takes on-demand data exports from coursera and dumps it in a sqlite database.
+This script takes on-demand data exports from coursera and dumps it in a postgresql database.
 
 You need to create two folders:
 	1) Folder with html files provided with the exports
 	2) Folder with csv files provided with the exports
 
-Specify the file paths to these folders in the 'convert_ondemand_config.py' file 
-
-The third line in the config file specifies the location and name of the sqlite database.
-
-	Example: "/home/jasper/Desktop/federalism.db" <-- Do not forget the '.db'.
-
-The fourth line specifies the location of a simple file for logging
+Specify the parameters of this script in the 'convert_ondemand_config.py' file.
 
 Run this script using the command 'python convert_ondemand.py'
 
@@ -48,74 +42,117 @@ class scraper:
 		except AttributeError:
 			return None
 
-# SQL C
+# POSTGRES
 
-class insert_SQL:
+class postgresql:
 
-	def __init__(self):
-		None
+	def __init__(self, database, user, password, host):
+		self.database = database
+		self.host = host
+		self.user = user
+		self.password = password
 		
-	def create_database(self, SQLdatabase):
-		conn = mdb.connect("localhost", "root", "root")
+	def create_database(self):
+		# Connect
+		try:
+			conn = psycopg2.connect(user = self.user, host = self.host, password = self.password)
+			# Set isolation level
+			conn.set_isolation_level(0)
+		except:
+			print "ERROR: Could not connect to postgresql. Check settings in config file."
+			log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
 
 		with conn:
 			c = conn.cursor()
-			c.execute("DROP DATABASE IF EXISTS {};".format(SQLdatabase))
-			c.execute("CREATE DATABASE {};".format(SQLdatabase))
+			c.execute("""DROP DATABASE IF EXISTS {}""".format(self.database))
+			c.execute("""CREATE DATABASE {}""".format(self.database))
 			conn.commit()
 
 		if conn:
 			conn.close()
 
-	def insert_headers(self, SQLdatabase, SQLstatement):
-		conn = mdb.connect("localhost", "root", "root", SQLdatabase)
+	def insert_headers(self, header):
+		# Connect
+		try:
+			conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
+			# Set isolation level
+			conn.set_isolation_level(0)
+		except:
+			print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
+			log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
+			return None
 
 		with conn:
-			c = conn.cursor()
-			c = conn.cursor()
-			c.execute(SQLstatement)
-			conn.commit()
+			try:
+				c = conn.cursor()
+				c.execute(header)
+				conn.commit()
+			except psycopg2.ProgrammingError as e:
+				print "ERROR: Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database)
+				log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
+				return False
 
 		if conn:
 			conn.close()
 
 		return None
 
-	def checkQuery(self, SQLstatement):
-		if "varchar" in SQLstatement:
-			SQLstatement = SQLstatement.replace("varchar", "VARCHAR(1000)")
-		if "VARCHAR(65535)" in SQLstatement:
-			SQLstatement = SQLstatement.replace("VARCHAR(65535)", "TEXT")
-		if "programming_submission_part_grid_grading_status_executor_run_start_ts" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_submission_part_grid_grading_status_executor_run_start_ts", "programming_submission_part_status_executor_run_start_ts")
-		if "programming_submission_part_grid_grading_status_executor_run_status" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_submission_part_grid_grading_status_executor_run_status", "programming_submission_part_status_executor_run_status")
+	def insert_data(self, data_folder, file_):
+		# Connect
+		try:
+			conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
+			# Set isolation level
+			conn.set_isolation_level(0)
+		except:
+			print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
+			log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
+			return None
 
-		if "programming_assignment_submission_schema_part_possible_response_order" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_order", "programming_assignment_submission_schema_response_order")
-		if "programming_assignment_submission_schema_part_possible_response_is_correct" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_is_correct", "programming_assignment_submission_schema_response_correct")
-		if "programming_assignment_submission_schema_part_possible_response_feedback" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_feedback", "programming_assignment_submission_schema_response_feedback")
-		if "programming_assignment_submission_schema_part_possible_response_answers" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_possible_response_answers", "programming_assignment_submission_schema_response_answers")
+		with conn:
+			c = conn.cursor()
+			# Open csv file and delete header
+			try:
+				#num_lines = sum(1 for line in open("{}/{}.csv".format(data_folder, file_)))
+				#if num_lines <= 2:
+					#return None
+				# Remove header and save data in temporary file
+				with open(r"{}/{}.csv".format(data_folder, file_), 'r') as f:
+					with open(r"{}/{}_temp.csv".format(data_folder, file_), 'w') as f1:
+						next(f)
+						for line in f:
+							f1.write(line)
+			except:
+				print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_)
+				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_))
+				return(None)
+				
+			# Copy data to PostGres table
+			try:
+				c.execute("""COPY {} FROM '{}/{}_temp.csv' DELIMITER ',' CSV;""".format(file_, data_folder, file_))
+				print "TRUE"
+				log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
+				conn.commit()
+			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
+				if str(type(e)) == '<class psycopg2.ProgrammingError>':
+					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
+					log.logMessage("CSV-OPENERROR", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
+				else:
+					print "ERROR: could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database)
+					log.logMessage("CSV-OPENERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
+			# Delete file
+			os.remove("{}/{}_temp.csv".format(data_folder, file_))
+			#except psycopg2.DataError as e:
+				#print "ERROR: Could not send data for {} to database {}. Postgres returned error 'psycopg2.DataError'".format(file_, self.database)
+				#log.logMessage("POSTGRES-INSERTERROR", "Could not send data for {} to database {}. Postgres returned error 'psycopg2.DataError'".format(file_, self.database))
 
-		if "programming_submission_part_grid_submission_custom_grader_parameters" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_submission_part_grid_submission_custom_grader_parameters", "programming_submission_part_grader_parameters")
 
-		if "programming_assignment_submission_schema_part_grid_schema_expected_file_name" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_expected_file_name", "programming_assignment_submission_schema_file_name")
-		if "programming_assignment_submission_schema_part_grid_schema_executor_id" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_executor_id", "programming_assignment_submission_schema_executor_id")
-		if "programming_assignment_submission_schema_part_grid_schema_timeout" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_schema_timeout", "programming_assignment_submission_timeout")
-		if "programming_assignment_submission_schema_part_grid_custom_grader_parameters" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_part_grid_custom_grader_parameters", "programming_assignment_submission_schema_grader_parameters")
+			#if f:
+				#f.close()
 
-		if "programming_assignment_submission_schema_default_incorrect_feedback" in SQLstatement:
-			SQLstatement = SQLstatement.replace("programming_assignment_submission_schema_default_incorrect_feedback", "programming_assignment_submission_incorrect_feedback")
+		if conn:
+			conn.close()
 
-		return SQLstatement
+		return None
 
 # Simple logging function
 
@@ -136,18 +173,23 @@ class logger:
 # Call
 
 if __name__ == "__main__":
+	# Set up log
+	if config.log:
+		log = logger(config.log_location)
+		log.logMessage("INFO", "started log")
 	# Get file names
 	files = [fileN.replace(".html", "") for fileN in os.listdir(config.path_to_variables)]
 	# Create database
-	insert_SQL().create_database(config.SQL_database_name)
+	psql = postgresql(config.postgres_database_name, config.postgres_user, config.postgres_pwd, config.postgres_host)
+	psql.create_database()
 	# Get sql statements for each file
 	for file_ in files:
 		if(file_ == "readme"):
 			continue
 		# Initiate scraper and scrape
 		scr = scraper(config.path_to_variables + "/" + file_ + ".html").scrape()
-		scr = insert_SQL().checkQuery(scr)
 		print scr
 		# Create SQL tables
-		insert_SQL().insert_headers(config.SQL_database_name, scr)
-
+		psql.insert_headers(scr)
+		# Insert CSV data
+		psql.insert_data(config.path_to_data, file_)
