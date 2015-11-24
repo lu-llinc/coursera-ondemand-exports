@@ -115,22 +115,7 @@ class postgresql:
 
 		with conn:
 			c = conn.cursor()
-			# Open csv file and delete header
-			try:
-				num_lines = sum(1 for line in open("{}/{}.csv".format(data_folder, file_)))
-				if num_lines <= 2:
-					return None
-				# Remove header and save data in temporary file
-				with open(r"{}/{}.csv".format(data_folder, file_), 'r') as f:
-					with open(r"{}/{}_temp.csv".format(data_folder, file_), 'w') as f1:
-						next(f)
-						for line in f:
-							f1.write(line)
-			except:
-				print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_)
-				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_))
-				return(None)
-				
+
 			# Copy data to PostGres table
 			try:
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
@@ -158,6 +143,33 @@ class postgresql:
 			conn.close()
 
 		return None
+
+class helpers:
+
+	def __init__(self, data_folder, file_):
+		self.data_folder = data_folder
+		self.file_ = file_
+
+	def near_empty_files(self):
+		num_lines = sum(1 for line in open("{}/{}.csv".format(data_folder, file_)))
+		if num_lines <= 2:
+		return None
+
+	def remove_headers_csv(self):
+		# Open csv file and delete header
+		try:
+			# Remove header and save data in temporary file
+			with open(r"{}/{}.csv".format(data_folder, file_), 'r') as f:
+				with open(r"{}/{}_temp.csv".format(data_folder, file_), 'w') as f1:
+					next(f)
+					for line in f:
+						f1.write(line)
+		except:
+			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_)
+			log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(data_folder, file_))
+			return(None)
+
+
 
 # Simple logging function
 
