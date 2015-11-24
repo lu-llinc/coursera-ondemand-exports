@@ -114,13 +114,11 @@ class postgresql:
 	def insert_data(self, data_folder, file_):
 		# Connect
 		conn = self.pysql_connect(db=True)
-		# Helpers
-		help = helpers(data_folder, file_)
 
 		with conn:
 			c = conn.cursor()
 			# remove csv headers
-			help.remove_headers_csv()
+			helpers(data_folder, file_).remove_headers_csv()
 			# Copy data to PostGres table
 			try:
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
