@@ -78,7 +78,8 @@ class postgresql:
 
 		
 	def create_database(self):
-
+		# Connect
+		conn = self.psql_connect(db=False)
 
 		with conn:
 			c = conn.cursor()
@@ -90,7 +91,8 @@ class postgresql:
 			conn.close()
 
 	def insert_headers(self, header):
-
+		# Connect
+		conn = self.pysql_connect(db=True)
 
 		with conn:
 			try:
@@ -109,22 +111,15 @@ class postgresql:
 
 	def insert_data(self, data_folder, file_):
 		# Connect
-		try:
-			conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
-			# Set isolation level
-			conn.set_isolation_level(0)
-		except:
-			print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
-			log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
-			return None
+		conn = self.pysql_connect(db=True)
 
 		with conn:
 			c = conn.cursor()
 			# Open csv file and delete header
 			try:
-				#num_lines = sum(1 for line in open("{}/{}.csv".format(data_folder, file_)))
-				#if num_lines <= 2:
-					#return None
+				num_lines = sum(1 for line in open("{}/{}.csv".format(data_folder, file_)))
+				if num_lines <= 2:
+					return None
 				# Remove header and save data in temporary file
 				with open(r"{}/{}.csv".format(data_folder, file_), 'r') as f:
 					with open(r"{}/{}_temp.csv".format(data_folder, file_), 'w') as f1:
@@ -176,7 +171,7 @@ class logger:
 		self.message = message
 		self.time = strftime("%Y-%m-%d %H:%M:%S", localtime())
 		# Write
-		with open(self.location, 'a') as f:
+		with open(self.location, 'w') as f:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
