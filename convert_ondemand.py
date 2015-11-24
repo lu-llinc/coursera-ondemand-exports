@@ -51,16 +51,34 @@ class postgresql:
 		self.host = host
 		self.user = user
 		self.password = password
+
+	def psql_connect(self, db = True):
+		# If db == True, then connect to specific db specified in self.database
+		if db:
+			try:
+				conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
+				# Set isolation level
+				conn.set_isolation_level(0)
+			except:
+				print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
+				log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
+				return None
+		# Else, db == False. This is called when db is created.
+		else:
+			try:
+				conn = psycopg2.connect(user = self.user, host = self.host, password = self.password)
+				# Set isolation level
+				conn.set_isolation_level(0)
+			except:
+				print "ERROR: Could not connect to postgresql. Check settings in config file."
+				log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
+
+		return conn
+
+
 		
 	def create_database(self):
-		# Connect
-		try:
-			conn = psycopg2.connect(user = self.user, host = self.host, password = self.password)
-			# Set isolation level
-			conn.set_isolation_level(0)
-		except:
-			print "ERROR: Could not connect to postgresql. Check settings in config file."
-			log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
+
 
 		with conn:
 			c = conn.cursor()
@@ -72,15 +90,7 @@ class postgresql:
 			conn.close()
 
 	def insert_headers(self, header):
-		# Connect
-		try:
-			conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
-			# Set isolation level
-			conn.set_isolation_level(0)
-		except:
-			print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
-			log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
-			return None
+
 
 		with conn:
 			try:
