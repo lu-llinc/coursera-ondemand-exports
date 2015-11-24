@@ -6,7 +6,7 @@ Config settings
 '''
 
 log = True
-log_location = '/home/jasper/Desktop/convert_ondemand/federalism_terrorism.txt'
+log_location = '/home/jasper/Desktop/convert_ondemand/federalism_log.txt'
 path_to_data = '/home/jasper/Documents/hadoop_cluster/virtual-hadoop-cluster/data/federalism_data'
 path_to_variables =  '/home/jasper/Documents/hadoop_cluster/virtual-hadoop-cluster/data/federalism_vars'
 postgres_database_name = 'federalism_ondemand' 
