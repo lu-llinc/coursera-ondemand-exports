@@ -1,0 +1,67 @@
+2015-11-24 12:38:15	INFO	started log
+2015-11-24 12:38:16	SUCCESS	Successfully inserted data from dataset assessment_text_exact_match_questions into terrorism_ondemand.
+2015-11-24 12:38:16	SUCCESS	Successfully inserted data from dataset peer_review_part_choices into terrorism_ondemand.
+2015-11-24 12:38:16	CSV-EOFERROR	could not insert data for on_demand_session_memberships into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:16	CSV-EOFERROR	could not insert data for course_item_types into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:20	SUCCESS	Successfully inserted data from dataset assessment_actions into terrorism_ondemand.
+2015-11-24 12:38:20	SUCCESS	Successfully inserted data from dataset course_memberships into terrorism_ondemand.
+2015-11-24 12:38:20	SUCCESS	Successfully inserted data from dataset assessment_question_types into terrorism_ondemand.
+2015-11-24 12:38:21	CSV-EOFERROR	could not insert data for peer_submission_part_free_responses into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset assessment_regex_patterns into terrorism_ondemand.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset peer_assignment_review_schema_part_options into terrorism_ondemand.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset assessment_single_numeric_patterns into terrorism_ondemand.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset on_demand_sessions into terrorism_ondemand.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset course_modules into terrorism_ondemand.
+2015-11-24 12:38:21	SUCCESS	Successfully inserted data from dataset demographics_questions into terrorism_ondemand.
+2015-11-24 12:38:22	CSV-EOFERROR	could not insert data for assessment_response_options into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset assessment_math_expression_patterns into terrorism_ondemand.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset assessment_response_patterns into terrorism_ondemand.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset course_item_peer_assignments into terrorism_ondemand.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset course_grades into terrorism_ondemand.
+2015-11-24 12:38:23	CSV-EOFERROR	could not insert data for peer_reviews into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset assessment_math_expression_questions into terrorism_ondemand.
+2015-11-24 12:38:23	SUCCESS	Successfully inserted data from dataset discussion_question_followings into terrorism_ondemand.
+2015-11-24 12:38:25	CSV-EOFERROR	could not insert data for assessment_questions into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:26	SUCCESS	Successfully inserted data from dataset assessment_mcq_questions into terrorism_ondemand.
+2015-11-24 12:38:26	SUCCESS	Successfully inserted data from dataset assessment_types into terrorism_ondemand.
+2015-11-24 12:38:26	SUCCESS	Successfully inserted data from dataset discussion_answer_votes into terrorism_ondemand.
+2015-11-24 12:38:27	CSV-EOFERROR	could not insert data for assessment_responses into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset assessment_text_exact_match_patterns into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset peer_submission_part_scores into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset discussion_question_flags into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset assessment_regex_pattern_flags into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset assessment_assessments_questions into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset demographics_question_types into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset course_progress_state_types into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset course_lessons into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset peer_review_part_free_responses into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset course_formative_quiz_grades into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset peer_comments into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset discussion_question_votes into terrorism_ondemand.
+2015-11-24 12:38:27	SUCCESS	Successfully inserted data from dataset course_item_grades into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset discussion_answers into terrorism_ondemand.
+2015-11-24 12:38:28	CSV-EOFERROR	could not insert data for demographics_answers into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_mcq_reflect_questions into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_regex_questions into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset course_item_assessments into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset discussion_answer_flags into terrorism_ondemand.
+2015-11-24 12:38:28	CSV-EOFERROR	could not insert data for peer_assignments into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_scope_types into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset demographics_choices into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset peer_assignment_review_schema_parts into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_checkbox_reflect_questions into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessments into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset users into terrorism_ondemand.
+2015-11-24 12:38:28	CSV-EOFERROR	could not insert data for peer_submissions into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_checkbox_questions into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset course_items into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset assessment_reflect_questions into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset discussion_forums into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset leiden_course_user_ids into terrorism_ondemand.
+2015-11-24 12:38:28	SUCCESS	Successfully inserted data from dataset peer_skips into terrorism_ondemand.
+2015-11-24 12:38:34	CSV-EOFERROR	could not insert data for assessment_options into terrorism_ondemand. This is most likely due to 'extra data after last expected column' error.
+2015-11-24 12:38:34	SUCCESS	Successfully inserted data from dataset course_item_passing_states into terrorism_ondemand.
+2015-11-24 12:38:36	SUCCESS	Successfully inserted data from dataset course_progress into terrorism_ondemand.
+2015-11-24 12:38:36	SUCCESS	Successfully inserted data from dataset assessment_single_numeric_questions into terrorism_ondemand.
+2015-11-24 12:38:36	SUCCESS	Successfully inserted data from dataset peer_assignment_submission_schema_parts into terrorism_ondemand.
+2015-11-24 12:38:36	SUCCESS	Successfully inserted data from dataset discussion_questions into terrorism_ondemand.
