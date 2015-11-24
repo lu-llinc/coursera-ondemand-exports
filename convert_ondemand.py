@@ -128,7 +128,7 @@ class postgresql:
 				
 			# Copy data to PostGres table
 			try:
-				c.execute("""COPY {} FROM '{}/{}_temp.csv' DELIMITER ',' CSV;""".format(file_, data_folder, file_))
+				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
 				print "TRUE"
 				log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 				conn.commit()
