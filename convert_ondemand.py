@@ -94,7 +94,7 @@ class postgresql:
 
 	def insert_headers(self, header):
 		# Connect
-		conn = self.pysql_connect(db=True)
+		conn = self.psql_connect(db=True)
 
 		with conn:
 			try:
@@ -113,7 +113,7 @@ class postgresql:
 
 	def insert_data(self, data_folder, file_):
 		# Connect
-		conn = self.pysql_connect(db=True)
+		conn = self.psql_connect(db=True)
 
 		with conn:
 			c = conn.cursor()
