@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 '''
-Convert the on-demand course exports to a sqlite table
+Convert the on-demand course exports to a postgresql table
 '''
 
 import bs4 as BeautifulSoup
@@ -128,7 +128,7 @@ class postgresql:
 				
 			# Copy data to PostGres table
 			try:
-				c.execute("""COPY {} FROM '{}/{}_temp.csv' DELIMITER ',' CSV;""".format(file_, data_folder, file_))
+				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
 				print "TRUE"
 				log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 				conn.commit()
