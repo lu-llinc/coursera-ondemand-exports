@@ -147,11 +147,16 @@ class helpers:
 		self.file_ = file_
 
 	def near_empty_files(self):
-		num_lines = sum(1 for line in open("{}/{}.csv".format(self.data_folder, self.file_)))
-		if num_lines <= 2:
-			return True
-		else:
-			return False
+		try:
+			num_lines = sum(1 for line in open("{}/{}.csv".format(self.data_folder, self.file_)))
+			if num_lines <= 2:
+				return True
+			else:
+				return False
+		except IOerror:
+			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
+			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
+			return(None)
 
 	def remove_headers_csv(self):
 		# Open csv file and delete header
