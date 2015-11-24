@@ -156,7 +156,7 @@ class helpers:
 		except IOError:
 			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
 			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
-			return(None)
+			return True
 
 	def remove_headers_csv(self):
 		# Open csv file and delete header
