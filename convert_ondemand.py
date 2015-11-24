@@ -78,8 +78,6 @@ class postgresql:
 				log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
 
 		return conn
-
-
 		
 	def create_database(self):
 		# Connect
