@@ -153,7 +153,7 @@ class helpers:
 				return True
 			else:
 				return False
-		except IOerror:
+		except IOError:
 			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
 			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
 			return(None)
