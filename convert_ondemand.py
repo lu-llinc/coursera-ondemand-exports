@@ -147,7 +147,7 @@ class postgresql:
 
 class helpers:
 
-	def __init__(self, data_folder, file_):
+	def __init__(self, folder, file_):
 		self.data_folder = data_folder
 		self.file_ = file_
 
