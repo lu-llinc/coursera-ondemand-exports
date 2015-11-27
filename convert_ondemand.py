@@ -3,7 +3,7 @@
 
 # Written by: Jasper Ginn
 # Leiden University
-# Last mod: 24-11-2015
+# Last mod: 27-11-2015
 
 '''
 Convert the on-demand course exports to a postgresql table
@@ -13,7 +13,6 @@ import bs4 as BeautifulSoup
 import convert_ondemand_config as config
 import psycopg2
 import os
-import pandas
 from time import localtime, strftime
 
 '''
@@ -34,8 +33,8 @@ Run this script using the command 'python convert_ondemand.py'
 
 class scraper:
 
-	def __init__(self, fileN):
-		self.file = fileN
+	def __init__(self, file_):
+		self.file = file_
 
 	def scrape(self):
 		# Soup page
@@ -65,7 +64,8 @@ class postgresql:
 				conn.set_isolation_level(0)
 			except:
 				print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
-				log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
+				if config.log:
+					log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
 				return None
 		# Else, db == False. This is called when db is created.
 		else:
@@ -75,7 +75,8 @@ class postgresql:
 				conn.set_isolation_level(0)
 			except:
 				print "ERROR: Could not connect to postgresql. Check settings in config file."
-				log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
+				if config.log:
+					log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
 
 		return conn
 		
@@ -103,7 +104,8 @@ class postgresql:
 				conn.commit()
 			except psycopg2.ProgrammingError as e:
 				print "ERROR: Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database)
-				log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
+				if config.log:
+					log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
 				return False
 
 		if conn:
@@ -122,16 +124,19 @@ class postgresql:
 			# Copy data to PostGres table
 			try:
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
-				print "TRUE"
-				log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 				conn.commit()
+				print "TRUE"
+				if config.log:
+					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
 				if str(type(e)) == '<class psycopg2.ProgrammingError>':
 					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
-					log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
+					if config.log:
+						log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
 				else:
 					print "ERROR: could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database)
-					log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
+					if config.log:
+						log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
 			# Delete file
 			os.remove("{}/{}_temp.csv".format(data_folder, file_))
 
@@ -155,7 +160,8 @@ class helpers:
 				return False
 		except IOError:
 			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
-			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
+			if config.log:
+				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
 			return True
 
 	def remove_headers_csv(self):
@@ -169,7 +175,8 @@ class helpers:
 						f1.write(line)
 		except:
 			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_)
-			log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_))
+			if config.log:
+				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_))
 			return(None)
 
 # Simple logging function
