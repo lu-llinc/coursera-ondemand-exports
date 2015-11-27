@@ -65,7 +65,8 @@ class postgresql:
 				conn.set_isolation_level(0)
 			except:
 				print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
-				log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
+				if config.log:
+					log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
 				return None
 		# Else, db == False. This is called when db is created.
 		else:
@@ -75,7 +76,8 @@ class postgresql:
 				conn.set_isolation_level(0)
 			except:
 				print "ERROR: Could not connect to postgresql. Check settings in config file."
-				log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
+				if config.log:
+					log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
 
 		return conn
 		
@@ -103,7 +105,8 @@ class postgresql:
 				conn.commit()
 			except psycopg2.ProgrammingError as e:
 				print "ERROR: Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database)
-				log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
+				if config.log:
+					log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
 				return False
 
 		if conn:
@@ -111,29 +114,32 @@ class postgresql:
 
 		return None
 
-	def insert_data(self, data_folder, file_):
+	def insert_data(self, folder, file_):
 		# Connect
 		conn = self.psql_connect(db=True)
 
 		with conn:
 			c = conn.cursor()
 			# remove csv headers
-			helpers(data_folder, file_).remove_headers_csv()
+			helpers(folder, file_).remove_headers_csv()
 			# Copy data to PostGres table
 			try:
-				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
+				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, folder, file_))
 				print "TRUE"
-				log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
+				if config.log:
+					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 				conn.commit()
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
 				if str(type(e)) == '<class psycopg2.ProgrammingError>':
 					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
-					log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
+					if config.log:
+						log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
 				else:
 					print "ERROR: could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database)
-					log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
+					if config.log:
+						log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
 			# Delete file
-			os.remove("{}/{}_temp.csv".format(data_folder, file_))
+			os.remove("{}/{}_temp.csv".format(folder, file_))
 
 		if conn:
 			conn.close()
@@ -143,7 +149,7 @@ class postgresql:
 class helpers:
 
 	def __init__(self, folder):
-		self.folder = data_folder
+		self.folder = folder
 
 	def unique_files(self):
 		files = os.listdir(self.folder)
@@ -155,19 +161,18 @@ class helpers:
 					count += 1
 		return(set(files))
 
-		[fileN.replace(".html", "") for fileN in os.listdir(config.path_to_files)]
-
 	def near_empty_files(self, file_):
 		self.file_ = file_
 		try:
-			num_lines = sum(1 for line in open("{}/{}.csv".format(self.data_folder, self.file_)))
+			num_lines = sum(1 for line in open("{}/{}.csv".format(self.folder, self.file_)))
 			if num_lines <= 2:
 				return True
 			else:
 				return False
 		except IOError:
-			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
-			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
+			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_)
+			if config.log:
+				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_))
 			return True
 
 	def remove_headers_csv(self, file_):
@@ -175,14 +180,15 @@ class helpers:
 		# Open csv file and delete header
 		try:
 			# Remove header and save data in temporary file
-			with open(r"{}/{}.csv".format(self.data_folder, self.file_), 'r') as f:
-				with open(r"{}/{}_temp.csv".format(self.data_folder, self.file_), 'w') as f1:
+			with open(r"{}/{}.csv".format(self.folder, self.file_), 'r') as f:
+				with open(r"{}/{}_temp.csv".format(self.folder, self.file_), 'w') as f1:
 					next(f)
 					for line in f:
 						f1.write(line)
 		except:
-			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_)
-			log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_))
+			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_)
+			if config.log:
+				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_))
 			return(None)
 
 # Simple logging function
