@@ -142,11 +142,23 @@ class postgresql:
 
 class helpers:
 
-	def __init__(self, data_folder, file_):
-		self.data_folder = data_folder
-		self.file_ = file_
+	def __init__(self, folder):
+		self.folder = data_folder
 
-	def near_empty_files(self):
+	def unique_files(self):
+		files = os.listdir(self.folder)
+		count = 0
+		for file_ in files:
+			for exs in [".html", ".csv"]:
+				if exs in file_:
+					files[count] = file_.replace(exs, "")
+					count += 1
+		return(set(files))
+
+		[fileN.replace(".html", "") for fileN in os.listdir(config.path_to_files)]
+
+	def near_empty_files(self, file_):
+		self.file_ = file_
 		try:
 			num_lines = sum(1 for line in open("{}/{}.csv".format(self.data_folder, self.file_)))
 			if num_lines <= 2:
@@ -158,7 +170,8 @@ class helpers:
 			log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
 			return True
 
-	def remove_headers_csv(self):
+	def remove_headers_csv(self, file_):
+		self.file_ = file_
 		# Open csv file and delete header
 		try:
 			# Remove header and save data in temporary file
@@ -196,7 +209,7 @@ if __name__ == "__main__":
 		log = logger(config.log_location)
 		log.logMessage("INFO", "started log")
 	# Get file names
-	files = [fileN.replace(".html", "") for fileN in os.listdir(config.path_to_variables)]
+	files = 
 	# Create database
 	psql = postgresql(config.postgres_database_name, config.postgres_user, config.postgres_pwd, config.postgres_host)
 	psql.create_database()
