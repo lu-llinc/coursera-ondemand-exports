@@ -120,7 +120,7 @@ class postgresql:
 		with conn:
 			c = conn.cursor()
 			# remove csv headers
-			helpers(folder, file_).remove_headers_csv()
+			helpers(folder).remove_headers_csv(file_)
 			# Copy data to PostGres table
 			try:
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, folder, file_))
@@ -202,7 +202,7 @@ class logger:
 		self.message = message
 		self.time = strftime("%Y-%m-%d %H:%M:%S", localtime())
 		# Write
-		with open(self.location, 'w') as f:
+		with open(self.location, 'a') as f:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
