@@ -1,19 +1,13 @@
 #!/usr/bin/env python2.7
 # encoding: utf-8
 
-# Written by: Jasper Ginn
-# Leiden University
-# Last mod: 27-11-2015
-
 '''
 Convert the on-demand course exports to a postgresql table
 '''
 
-import bs4 as BeautifulSoup
-import convert_ondemand_config as config
-import psycopg2
-import os
-from time import localtime, strftime
+# Written by: Jasper Ginn
+# Copyright @ Leiden University
+# Last mod: 27-11-2015
 
 '''
 
@@ -25,7 +19,41 @@ Specify the parameters of this script in the 'convert_ondemand_config.py' file.
 
 Run this script using the command 'python convert_ondemand.py'
 
+See the README.md file in this directory for more information.
+
 '''
+
+''' COPYRIGHT INFORMATION
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Leiden University
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+'''
+
+import bs4 as BeautifulSoup
+import convert_ondemand_config as config
+import psycopg2
+import os
+from time import localtime, strftime
 
 # SCRAPER
 
