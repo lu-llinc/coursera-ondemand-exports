@@ -1,28 +1,6 @@
 #!/usr/bin/env python2.7
 # encoding: utf-8
 
-'''
-Convert the on-demand course exports to a postgresql table
-'''
-
-# Written by: Jasper Ginn
-# Copyright @ Leiden University
-# Last mod: 27-11-2015
-
-'''
-
-This script takes on-demand data exports from coursera and dumps it in a postgresql database.
-
-You need to unzip the export file and store the html AND the CSV files in a folder. 
-
-Specify the parameters of this script in the 'convert_ondemand_config.py' file.
-
-Run this script using the command 'python convert_ondemand.py'
-
-See the README.md file in this directory for more information.
-
-'''
-
 ''' COPYRIGHT INFORMATION
 
 The MIT License (MIT)
@@ -46,6 +24,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+'''
+
+# Written by: Jasper Ginn
+# Copyright @ Leiden University
+# Last mod: 27-11-2015
+
+'''
+Convert the on-demand course exports to a postgresql table:
+
+This script takes on-demand data exports from coursera and dumps it in a postgresql database.
+
+You need to unzip the export file and store the html AND the CSV files in a folder. 
+
+Specify the parameters of this script in the 'convert_ondemand_config.py' file.
+
+Run this script using the command 'python convert_ondemand.py'
+
+See the README.md file in this directory for more information.
 
 '''
 
