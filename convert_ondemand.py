@@ -33,12 +33,17 @@ Run this script using the command 'python convert_ondemand.py'
 
 class scraper:
 
+<<<<<<< HEAD
 	def __init__(self, file_):
 		self.file = file_
+=======
+	def __init__(self, folder, file_):
+		self.filePath = "{}/{}.html".format(folder,file_)
+>>>>>>> tinkering
 
 	def scrape(self):
 		# Soup page
-		soup = BeautifulSoup.BeautifulSoup(open(self.file).read(), "html.parser")
+		soup = BeautifulSoup.BeautifulSoup(open(self.filePath).read(), "html.parser")
 		# Find SQL statement
 		try:
 			return soup.find("pre").text
@@ -113,17 +118,24 @@ class postgresql:
 
 		return None
 
-	def insert_data(self, data_folder, file_):
+	def insert_data(self, folder, file_):
 		# Connect
 		conn = self.psql_connect(db=True)
 
 		with conn:
 			c = conn.cursor()
 			# remove csv headers
-			helpers(data_folder, file_).remove_headers_csv()
+			helpers(folder, file_).remove_headers_csv()
 			# Copy data to PostGres table
 			try:
+<<<<<<< HEAD
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
+=======
+				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, folder, file_))
+				print "TRUE"
+				if config.log:
+					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
+>>>>>>> tinkering
 				conn.commit()
 				print "TRUE"
 				if config.log:
@@ -138,7 +150,7 @@ class postgresql:
 					if config.log:
 						log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
 			# Delete file
-			os.remove("{}/{}_temp.csv".format(data_folder, file_))
+			os.remove("{}/{}_temp.csv".format(folder, file_))
 
 		if conn:
 			conn.close()
@@ -147,36 +159,65 @@ class postgresql:
 
 class helpers:
 
+<<<<<<< HEAD
 	def __init__(self, folder, file_):
 		self.data_folder = data_folder
 		self.file_ = file_
+=======
+	def __init__(self, folder):
+		self.folder = folder
 
-	def near_empty_files(self):
+	def unique_files(self):
+		files = os.listdir(self.folder)
+		count = 0
+		for file_ in files:
+			for exs in [".html", ".csv"]:
+				if exs in file_:
+					files[count] = file_.replace(exs, "")
+					count += 1
+		return(set(files))
+>>>>>>> tinkering
+
+	def near_empty_files(self, file_):
+		self.file_ = file_
 		try:
-			num_lines = sum(1 for line in open("{}/{}.csv".format(self.data_folder, self.file_)))
+			num_lines = sum(1 for line in open("{}/{}.csv".format(self.folder, self.file_)))
 			if num_lines <= 2:
 				return True
 			else:
 				return False
 		except IOError:
+<<<<<<< HEAD
 			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
 			if config.log:
 				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
+=======
+			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_)
+			if config.log:
+				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_))
+>>>>>>> tinkering
 			return True
 
-	def remove_headers_csv(self):
+	def remove_headers_csv(self, file_):
+		self.file_ = file_
 		# Open csv file and delete header
 		try:
 			# Remove header and save data in temporary file
-			with open(r"{}/{}.csv".format(self.data_folder, self.file_), 'r') as f:
-				with open(r"{}/{}_temp.csv".format(self.data_folder, self.file_), 'w') as f1:
+			with open(r"{}/{}.csv".format(self.folder, self.file_), 'r') as f:
+				with open(r"{}/{}_temp.csv".format(self.folder, self.file_), 'w') as f1:
 					next(f)
 					for line in f:
 						f1.write(line)
 		except:
+<<<<<<< HEAD
 			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_)
 			if config.log:
 				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_))
+=======
+			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_)
+			if config.log:
+				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_))
+>>>>>>> tinkering
 			return(None)
 
 # Simple logging function
@@ -203,18 +244,18 @@ if __name__ == "__main__":
 		log = logger(config.log_location)
 		log.logMessage("INFO", "started log")
 	# Get file names
-	files = [fileN.replace(".html", "") for fileN in os.listdir(config.path_to_variables)]
+	files = helpers(config.path_to_files).unique_files()
 	# Create database
 	psql = postgresql(config.postgres_database_name, config.postgres_user, config.postgres_pwd, config.postgres_host)
 	psql.create_database()
 	# Get sql statements for each file
 	for file_ in files:
-		if file_ == "readme" or helpers(config.path_to_data, file_).near_empty_files() == True:
+		if file_ == "readme" or helpers(config.path_to_files).near_empty_files(file_) == True:
 			continue
 		# Initiate scraper and scrape
-		scr = scraper(config.path_to_variables + "/" + file_ + ".html").scrape()
+		scr = scraper(config.path_to_files, file_).scrape()
 		print scr
 		# Create SQL tables
 		psql.insert_headers(scr)
 		# Insert CSV data
-		psql.insert_data(config.path_to_data, file_)
+		psql.insert_data(config.path_to_files, file_)

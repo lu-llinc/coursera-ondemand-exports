@@ -1,2 +1,4 @@
 *.pyc
-.Rproj.user
+RConnect/.Rproj
+RConnect/.Rdata
+RConnect/.Rproj.user
