@@ -34,12 +34,12 @@ Run this script using the command 'python convert_ondemand.py'
 
 class scraper:
 
-	def __init__(self, fileN):
-		self.file = fileN
+	def __init__(self, folder, file_):
+		self.filePath = "{}/{}.html".format(folder,file_)
 
 	def scrape(self):
 		# Soup page
-		soup = BeautifulSoup.BeautifulSoup(open(self.file).read(), "html.parser")
+		soup = BeautifulSoup.BeautifulSoup(open(self.filePath).read(), "html.parser")
 		# Find SQL statement
 		try:
 			return soup.find("pre").text
@@ -218,7 +218,7 @@ if __name__ == "__main__":
 		if file_ == "readme" or helpers(config.path_to_files).near_empty_files(file_) == True:
 			continue
 		# Initiate scraper and scrape
-		scr = scraper(config.path_to_files + "/" + file_ + ".html").scrape()
+		scr = scraper(config.path_to_files, file_).scrape()
 		print scr
 		# Create SQL tables
 		psql.insert_headers(scr)
