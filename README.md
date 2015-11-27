@@ -1,8 +1,8 @@
 # Convert Coursera on-demand export data to a PostGreSQL database
 
-### Written by: Jasper Ginn
-### Date: 27-11-2015
-### Email: j.h.ginn[at]cdh.leidenuniv.nl
+* Written by: Jasper Ginn
+* Date: 27-11-2015
+* Email: j.h.ginn[at]cdh.leidenuniv.nl
 
 ## Feedback/Questions
 
