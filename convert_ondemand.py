@@ -209,18 +209,18 @@ if __name__ == "__main__":
 		log = logger(config.log_location)
 		log.logMessage("INFO", "started log")
 	# Get file names
-	files = 
+	files = helpers(config.path_to_files).unique_files()
 	# Create database
 	psql = postgresql(config.postgres_database_name, config.postgres_user, config.postgres_pwd, config.postgres_host)
 	psql.create_database()
 	# Get sql statements for each file
 	for file_ in files:
-		if file_ == "readme" or helpers(config.path_to_data, file_).near_empty_files() == True:
+		if file_ == "readme" or helpers(config.path_to_files).near_empty_files(file_) == True:
 			continue
 		# Initiate scraper and scrape
-		scr = scraper(config.path_to_variables + "/" + file_ + ".html").scrape()
+		scr = scraper(config.path_to_files + "/" + file_ + ".html").scrape()
 		print scr
 		# Create SQL tables
 		psql.insert_headers(scr)
 		# Insert CSV data
-		psql.insert_data(config.path_to_data, file_)
+		psql.insert_data(config.path_to_files, file_)
