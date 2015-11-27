@@ -28,6 +28,8 @@ Then, follow the 'first steps' tutorial [here](https://wiki.postgresql.org/wiki/
 
 ### Python
 
+Python version: 2.7.9
+
 The python script to convert the data depends on the following modules:
 
 * BeautifulSoup 4 (tested with version == 4.3.2)
