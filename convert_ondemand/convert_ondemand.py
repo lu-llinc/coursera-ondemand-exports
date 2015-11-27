@@ -19,9 +19,7 @@ from time import localtime, strftime
 
 This script takes on-demand data exports from coursera and dumps it in a postgresql database.
 
-You need to create two folders:
-	1) Folder with html files provided with the exports
-	2) Folder with csv files provided with the exports
+You need to unzip the export file and store the html AND the CSV files in a folder. 
 
 Specify the parameters of this script in the 'convert_ondemand_config.py' file.
 
