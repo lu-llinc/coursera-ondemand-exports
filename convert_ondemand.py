@@ -13,7 +13,6 @@ import bs4 as BeautifulSoup
 import convert_ondemand_config as config
 import psycopg2
 import os
-import pandas
 from time import localtime, strftime
 
 '''
