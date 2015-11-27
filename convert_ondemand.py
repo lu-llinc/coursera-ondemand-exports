@@ -203,7 +203,7 @@ class logger:
 		self.message = message
 		self.time = strftime("%Y-%m-%d %H:%M:%S", localtime())
 		# Write
-		with open(self.location, 'w') as f:
+		with open(self.location, 'a') as f:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
