@@ -16,7 +16,7 @@ You can find more information on the python conversion script in the `convert_on
 
 ### Why PostGreSQL?
 
-If you look at some of the headers that are supplied in the .html files, you see that some of them contain header specifications that are illegal in e.g. MySQL. Of course, you can choose to not use these header files and use another database. Additionally, PostGreSQL can import CSV files pretty painlessly. 
+If you look at the headers that are supplied in the .html files, you see that some of these contain header specifications that are illegal in e.g. MySQL. Of course, you can choose to not use these header files and use another database. Additionally, PostGreSQL can import CSV files pretty painlessly. 
 
 ## Dependencies
 
