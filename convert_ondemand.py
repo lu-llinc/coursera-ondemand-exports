@@ -13,6 +13,7 @@ import bs4 as BeautifulSoup
 import convert_ondemand_config as config
 import psycopg2
 import os
+import pandas
 from time import localtime, strftime
 
 '''
@@ -33,13 +34,8 @@ Run this script using the command 'python convert_ondemand.py'
 
 class scraper:
 
-<<<<<<< HEAD
-	def __init__(self, file_):
-		self.file = file_
-=======
 	def __init__(self, folder, file_):
 		self.filePath = "{}/{}.html".format(folder,file_)
->>>>>>> tinkering
 
 	def scrape(self):
 		# Soup page
@@ -128,18 +124,11 @@ class postgresql:
 			helpers(folder, file_).remove_headers_csv()
 			# Copy data to PostGres table
 			try:
-<<<<<<< HEAD
-				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, data_folder, file_))
-=======
 				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, folder, file_))
 				print "TRUE"
 				if config.log:
 					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
->>>>>>> tinkering
 				conn.commit()
-				print "TRUE"
-				if config.log:
-					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
 				if str(type(e)) == '<class psycopg2.ProgrammingError>':
 					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
@@ -159,11 +148,6 @@ class postgresql:
 
 class helpers:
 
-<<<<<<< HEAD
-	def __init__(self, folder, file_):
-		self.data_folder = data_folder
-		self.file_ = file_
-=======
 	def __init__(self, folder):
 		self.folder = folder
 
@@ -176,7 +160,6 @@ class helpers:
 					files[count] = file_.replace(exs, "")
 					count += 1
 		return(set(files))
->>>>>>> tinkering
 
 	def near_empty_files(self, file_):
 		self.file_ = file_
@@ -187,15 +170,9 @@ class helpers:
 			else:
 				return False
 		except IOError:
-<<<<<<< HEAD
-			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_)
-			if config.log:
-				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.data_folder, self.file_))
-=======
 			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_)
 			if config.log:
 				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_))
->>>>>>> tinkering
 			return True
 
 	def remove_headers_csv(self, file_):
@@ -209,15 +186,9 @@ class helpers:
 					for line in f:
 						f1.write(line)
 		except:
-<<<<<<< HEAD
-			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_)
-			if config.log:
-				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.data_folder, self.file_))
-=======
 			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_)
 			if config.log:
 				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_))
->>>>>>> tinkering
 			return(None)
 
 # Simple logging function
@@ -232,7 +203,7 @@ class logger:
 		self.message = message
 		self.time = strftime("%Y-%m-%d %H:%M:%S", localtime())
 		# Write
-		with open(self.location, 'a') as f:
+		with open(self.location, 'w') as f:
 			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
 			f.write("\n")
 
