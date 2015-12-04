@@ -37,6 +37,8 @@ The python script to convert the data depends on the following modules:
 
 You can install these modules with [easy_install](https://pypi.python.org/pypi/setuptools) or [pip](https://pypi.python.org/pypi/pip). To install pip, please see [this link](http://pip.readthedocs.org/en/stable/installing/)
 
+You can also install [Anaconda](https://www.continuum.io/downloads).
+
 ### R
 
 The R script depends on the `RPostGreSQL` package. Installation instructions can be found in the script.
