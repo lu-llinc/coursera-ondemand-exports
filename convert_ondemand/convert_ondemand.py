@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 ''' COPYRIGHT INFORMATION
-
 Copyright (C) 2015  Leiden University
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,7 +13,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see [http://www.gnu.org/licenses/].
-
 '''
 
 # Written by: Jasper Ginn
@@ -23,17 +21,11 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].
 
 '''
 Convert the on-demand course exports to a postgresql table:
-
 This script takes on-demand data exports from coursera and dumps it in a postgresql database.
-
 You need to unzip the export file and store the html AND the CSV files in a folder. 
-
 Specify the parameters of this script in the 'convert_ondemand_config.py' file.
-
 Run this script using the command 'python convert_ondemand.py'
-
 See the README.md file in this directory for more information.
-
 '''
 
 import bs4 as BeautifulSoup
@@ -136,13 +128,15 @@ class postgresql:
 			helpers(folder).remove_headers_csv(file_)
 			# Copy data to PostGres table
 			try:
-				c.execute("""COPY {} FROM '{}/{}_temp.csv' CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_, folder, file_))
+				fi = open('{}/{}_temp.csv'.format(folder, file_))
+				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_), fi)
 				print "TRUE"
 				if config.log:
 					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
 				conn.commit()
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
-				if str(type(e)) == '<class psycopg2.ProgrammingError>':
+				#print str(type(e))
+				if str(type(e)) == "<class 'psycopg2.ProgrammingError'>":
 					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
 					if config.log:
 						log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))

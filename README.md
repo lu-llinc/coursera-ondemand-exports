@@ -35,9 +35,9 @@ The python script to convert the data depends on the following modules:
 * BeautifulSoup 4 (tested with version == 4.3.2)
 * psycopg (tested with version == 2.6.1)
 
-You can install these modules with [easy_install](https://pypi.python.org/pypi/setuptools) or [pip](https://pypi.python.org/pypi/pip). To install pip, please see [this link](http://pip.readthedocs.org/en/stable/installing/)
+You can install these modules with [easy_install](https://pypi.python.org/pypi/setuptools) or [pip](https://pypi.python.org/pypi/pip). To install pip, please see [this link](http://pip.readthedocs.org/en/stable/installing/) (NB: To install psycopg2 in Ubuntu, you need to first do: sudo apt-get install python-dev)
 
-You can also install [Anaconda](https://www.continuum.io/downloads).
+Alternatively, you can install [Anaconda](https://www.continuum.io/downloads).
 
 ### R
 
