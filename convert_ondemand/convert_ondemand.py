@@ -17,7 +17,7 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].
 
 # Written by: Jasper Ginn
 # Copyright @ Leiden University
-# Last mod: 27-11-2015
+# Last mod: 06-01-2016
 
 '''
 Convert the on-demand course exports to a postgresql table:
