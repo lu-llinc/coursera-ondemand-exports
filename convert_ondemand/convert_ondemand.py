@@ -46,7 +46,9 @@ class scraper:
 		soup = BeautifulSoup.BeautifulSoup(open(self.filePath).read(), "html.parser")
 		# Find SQL statement
 		try:
-			return soup.find("pre").text
+			query = soup.find("pre").text
+			# Temporary fix to eliminate foreign and primary key contstraints before inserting data
+			return re.sub('((,FOREIGN KEY)|(,PRIMARY KEY)).*','',query)
 		except AttributeError:
 			return None
 
