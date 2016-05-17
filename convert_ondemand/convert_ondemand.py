@@ -51,7 +51,8 @@ class scraper:
 			# Temporary fix to eliminate foreign and primary key contstraints before inserting data
 			return re.sub('((,FOREIGN KEY)|(,PRIMARY KEY)).*','',query)
 			#return query
-		except AttributeError:
+		except AttributeError as e:
+			print e
 			return None
 
 # POSTGRES
