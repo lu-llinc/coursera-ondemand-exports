@@ -50,6 +50,7 @@ class scraper:
 			query = soup.find("pre").text
 			# Temporary fix to eliminate foreign and primary key contstraints before inserting data
 			return re.sub('((,FOREIGN KEY)|(,PRIMARY KEY)).*','',query)
+			#return query
 		except AttributeError:
 			return None
 
@@ -70,21 +71,16 @@ class postgresql:
 				conn = psycopg2.connect(dbname = self.database, user = self.user, host = self.host, password = self.password)
 				# Set isolation level
 				conn.set_isolation_level(0)
-			except:
-				print "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database)
-				if config.log:
-					log.logMessage("POSTGRES-CONNECTERROR", "ERROR: Could not connect to database {}. Check settings in config file.".format(self.database))
-				return None
+			except psycopg2.OperationalError as e:
+				print e
 		# Else, db == False. This is called when db is created.
 		else:
 			try:
 				conn = psycopg2.connect(user = self.user, host = self.host, password = self.password)
 				# Set isolation level
 				conn.set_isolation_level(0)
-			except:
-				print "ERROR: Could not connect to postgresql. Check settings in config file."
-				if config.log:
-					log.logMessage("POSTGRES-CONNECTERROR", "Could not connect to postgresql. Check settings in config file.")
+			except psycopg2.OperationalError as e:
+				print e
 
 		return conn
 		
@@ -111,10 +107,7 @@ class postgresql:
 				c.execute(header)
 				conn.commit()
 			except psycopg2.ProgrammingError as e:
-				print "ERROR: Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database)
-				if config.log:
-					log.logMessage("POSTGRES-QUERYERROR", "Could not send header for {} to database {}. Postgres returned error 'psycopg2.ProgrammingError'".format(file_, self.database))
-				return False
+				print e
 
 		if conn:
 			conn.close()
@@ -134,19 +127,10 @@ class postgresql:
 				fi = open('{}/{}_temp.csv'.format(folder, file_))
 				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_), fi)
 				print "TRUE"
-				if config.log:
-					log.logMessage("SUCCESS", "Successfully inserted data from dataset {} into {}.".format(file_, self.database))
+				# Commit changes
 				conn.commit()
 			except (psycopg2.DataError, psycopg2.ProgrammingError) as e:
-				#print str(type(e))
-				if str(type(e)) == "<class 'psycopg2.ProgrammingError'>":
-					print "ERROR: could not insert data for {} into {}. Table does not exist.".format(file_, self.database)
-					if config.log:
-						log.logMessage("POSTGRES-MISSINGTABLE", "could not insert data for {} into {}. Table does not exist.".format(file_, self.database))
-				else:
-					print "ERROR: could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database)
-					if config.log:
-						log.logMessage("CSV-EOFERROR", "could not insert data for {} into {}. This is most likely due to 'extra data after last expected column' error.".format(file_, self.database))
+				print e
 			# Delete file
 			os.remove("{}/{}_temp.csv".format(folder, file_))
 
@@ -162,13 +146,16 @@ class helpers:
 
 	def unique_files(self):
 		files = os.listdir(self.folder)
-		count = 0
-		for file_ in files:
-			for exs in [".html", ".csv"]:
-				if exs in file_:
-					files[count] = file_.replace(exs, "")
-					count += 1
-		return(set(files))
+		files_new = list()
+		for file_ in range(0, len(files)):
+		    # If programming possible responses etc., then change behaviour. This is new. Corresponding html file has a shortened name
+		    if files[file_] == "programming_assignment_submission_schema_part_xbkvdx.html":
+		        continue
+		    #print file_
+		    for exs in [".html", ".csv"]:
+		        if exs in files[file_]:
+		            files_new.append(files[file_].replace(exs, ""))
+		return(set(files_new))
 
 	def near_empty_files(self, file_):
 		self.file_ = file_
@@ -178,11 +165,8 @@ class helpers:
 				return True
 			else:
 				return False
-		except IOError:
-			print "ERROR: could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_)
-			if config.log:
-				log.logMessage("CSV-DOESNOTEXIST", "could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_))
-			return True
+		except IOError as e:
+			print "Could not open {}/{}.csv. File does not exist.".format(self.folder, self.file_)
 
 	def remove_headers_csv(self, file_):
 		self.file_ = file_
@@ -195,34 +179,11 @@ class helpers:
 					for line in f:
 						f1.write(line)
 		except:
-			print "ERROR: could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_)
-			if config.log:
-				log.logMessage("CSV-OPENERROR", "could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_))
-			return(None)
-
-# Simple logging function
-
-class logger:
-
-	def __init__(self, location):
-		self.location = location
-
-	def logMessage(self, loglevel, message):
-		self.loglevel = loglevel
-		self.message = message
-		self.time = strftime("%Y-%m-%d %H:%M:%S", localtime())
-		# Write
-		with open(self.location, 'a') as f:
-			f.write("{}	{}	{}".format(self.time, self.loglevel, self.message))
-			f.write("\n")
+			print "Could not open {}/{}.csv. Check if path_to_data in config file is correct.".format(self.folder, self.file_)
 
 # Call
 
 if __name__ == "__main__":
-	# Set up log
-	if config.log:
-		log = logger(config.log_location)
-		log.logMessage("INFO", "started log")
 	# Get file names
 	files = helpers(config.path_to_files).unique_files()
 	# Create database
@@ -230,7 +191,7 @@ if __name__ == "__main__":
 	psql.create_database()
 	# Get sql statements for each file
 	for file_ in files:
-		if file_ == "readme" or helpers(config.path_to_files).near_empty_files(file_) == True:
+		if file_ == "readme" or file_ == "guide.pdf" or helpers(config.path_to_files).near_empty_files(file_) == True:
 			continue
 		# Initiate scraper and scrape
 		scr = scraper(config.path_to_files, file_).scrape()
