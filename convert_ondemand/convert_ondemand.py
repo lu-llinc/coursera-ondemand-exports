@@ -126,7 +126,7 @@ class postgresql:
 			# Copy data to PostGres table
 			try:
 				fi = open('{}/{}_temp.csv'.format(folder, file_))
-				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER ',' NULL '' QUOTE '"' ESCAPE '\\' HEADER;""".format(file_), fi)
+				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER ';' NULL '' QUOTE '"' ESCAPE '\\';""".format(file_), fi)
 				print "TRUE"
 				# Commit changes
 				conn.commit()
