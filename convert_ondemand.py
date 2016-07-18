@@ -22,7 +22,7 @@ along with this program.  If not, see [http://www.gnu.org/licenses/].
 '''
 Convert the on-demand course exports to a postgresql table:
 This script takes on-demand data exports from coursera and dumps it in a postgresql database.
-You need to unzip the export file and store the html AND the CSV files in a folder. 
+You need to unzip the export file and store the html AND the CSV files in a folder.
 Specify the parameters of this script in the 'convert_ondemand_config.py' file.
 Run this script using the command 'python convert_ondemand.py'
 See the README.md file in this directory for more information.
@@ -84,7 +84,7 @@ class postgresql:
 				print e
 
 		return conn
-		
+
 	def create_database(self):
 		# Connect
 		conn = self.psql_connect(db=False)
@@ -126,7 +126,7 @@ class postgresql:
 			# Copy data to PostGres table
 			try:
 				fi = open('{}/{}_temp.csv'.format(folder, file_))
-				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER ';' NULL '' QUOTE '"' ESCAPE '\\';""".format(file_), fi)
+				c.copy_expert("""COPY {} FROM STDIN WITH CSV DELIMITER '{}' NULL '' QUOTE '"' ESCAPE '\\';""".format(file_, config.delimiter), fi)
 				print "TRUE"
 				# Commit changes
 				conn.commit()

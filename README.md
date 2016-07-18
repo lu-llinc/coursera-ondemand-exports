@@ -1,8 +1,7 @@
 # Convert Coursera on-demand export data to a PostGreSQL database
 
 * Written by: Jasper Ginn
-* Date: 27-11-2015
-* Email: j.h.ginn[at]cdh.leidenuniv.nl
+* Email: j.h.ginn[at]fgga.leidenuniv.nl
 
 ## Feedback/Questions
 
@@ -39,7 +38,17 @@ You can install these modules with [easy_install](https://pypi.python.org/pypi/s
 
 Alternatively, you can install [Anaconda](https://www.continuum.io/downloads).
 
-### R
+## Dumping your data
 
-The R script depends on the `RPostGreSQL` package. Installation instructions can be found in the script.
+These steps presume that you have installed the dependencies for Python and have installed PostGreSQL on your system. If you have not yet done so, please see for more information.
+
+1. Extract the compressed CSV and HTML files in a single folder on your computer.
+2. Modify details of the `convert_ondemand_config.py` file such that it points towards this folder and contains the necessary details to connect to the PostGreSQL server.
+	
+	* You do not need to add a '/' at the end of the folder path. 
+	* You do also not need to create a database. The script will create one for you and drop any existing databases by that name. To specify the name of the PostGreSQL database, see the `convert_ondemand_config.py` file.
+
+3. Run the script by running `python convert_ondemand.py` in a terminal.
+
+
 
