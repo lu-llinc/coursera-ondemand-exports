@@ -1,4 +1,6 @@
-# Convert Coursera on-demand export data to a PostGreSQL database
+# [DEPRECEATED] Convert Coursera on-demand export data to a PostGreSQL database
+
+** This program is no longer maintained because Coursera supplies a more convenient alternative with data exports **
 
 * Written by: Jasper Ginn
 * Email: j.h.ginn[at]fgga.leidenuniv.nl
